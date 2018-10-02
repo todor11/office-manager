@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Login</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{/css/custom.css}"/>
+</head>
+<body>
+    <div class="container">
+        <main  sec:authorize="hasRole('ADMIN')">
+            <div class="col-6 empl-main-cont">
+                <h1 class="center-size">Добавяне на нов служител</h1>
+                <form class="center-size">
+                    <div class="form-group">
+                        <label class="form-control-label" for="firstName">Име</label>
+                        <input type="text" class="form-control form-control-danger person-single-name-validate" th:value="${employee.firstName}" th:attr="employeeId=${employee.id}" id="firstName"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="middleName">Презиме</label>
+                        <input type="text" class="form-control form-control-danger person-single-name-empty-validate" id="middleName" th:value="${employee.middleName}" th:attr="employeeId=${employee.id}"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="lastName">Фамилия</label>
+                        <input type="text" class="form-control form-control-danger person-single-name-validate" id="lastName" th:value="${employee.lastName}" th:attr="employeeId=${employee.id}"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="EGN">ЕГН</label>
+                        <input type="text" class="form-control form-control-danger person-EGN-validate" id="EGN" th:value="${employee.egn}" th:attr="employeeId=${employee.id}"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="officiaryID">Служебен номер</label>
+                        <input type="text" class="form-control form-control-danger basic-text-validate" id="officiaryID" th:value="${employee.officiaryID}" th:attr="employeeId=${employee.id}"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="address">Адрес</label>
+                        <input type="text" class="form-control form-control-danger basic-text-empty-validate" id="address" th:value="${employee.address}" th:attr="employeeId=${employee.id}"/>
+                    </div>
+
+                    <div class="form-group" id="phone-container">
+                        <div th:each="phoneNumber : ${employee.phoneNumbers}" class="card empl-phone-card" th:attr="id=|empl-card-block_${phoneNumber.id}|, phoneNumberId=${phoneNumber.id}" >
+                            <div class="card-header empl-phone-header" role="tab" th:attr="id=|heading_${phoneNumber.id}|">
+                                <p class="mb-0">
+                                    <a class="empl-cont-a" th:attr="id=|empl-phone-number-label_${phoneNumber.id}|,aria-controls=|collapse_${phoneNumber.id}|,href=|#collapse_${phoneNumber.id}|" data-toggle="collapse" data-parent="#accordion" aria-expanded="true">
+                                        Тел. номер :
+                                    </a>
+                                </p>
+                            </div>
+
+                            <div th:attr="id=|collapse_${phoneNumber.id}|,aria-labelledby=|heading_${phoneNumber.id}|" class="collapse" role="tabpanel">
+                                <div class="card-block empl-card-block">
+                                    <label class="form-control-label">Телефонен номер</label>
+                                    <input type="text" class="form-control form-control-danger empl-phone-number" th:attr="id=|empl-phone-number-input_${phoneNumber.id}|, phoneNumberId=${phoneNumber.id}" th:value="${phoneNumber.phoneNumber}"/>
+                                    <label class="form-control-label">Служебен/личен</label>
+                                    <select class="form-control form-control-danger" th:attr="id=|empl-phone-type_${phoneNumber.id}|">
+                                        <option value="">Избери от падащото меню</option>
+                                        <div th:each="phoneType : ${phoneTypes}">
+                                            <option th:selected="${phoneNumber.phoneType} == ${phoneType}" th:value="${phoneType}" th:text="${phoneType}"></option>
+                                        </div>
+                                    </select>
+                                    <label class="form-control-label">Допълн. инфо</label>
+                                    <input type="text" th:attr="id=|phone-description_${phoneNumber.id}|" th:value="${phoneNumber.description}" class="form-control form-control-danger"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card empl-phone-card" id="empl-card-block-1">
+                            <div class="card-header empl-phone-header" role="tab" id="heading-1">
+                                <p class="mb-0">
+                                    <a class="empl-cont-a" id="empl-phone-number-label-1" data-toggle="collapse" data-parent="#accordion" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
+                                        Тел. номер :
+                                    </a>
+                                </p>
+                            </div>
+
+                            <div id="collapse-1" class="collapse" role="tabpanel" aria-labelledby="heading-1">
+                                <div class="card-block empl-card-block">
+                                    <label class="form-control-label">Телефонен номер</label>
+                                    <input type="text" class="form-control form-control-danger empl-phone-number" id="empl-phone-number-input-1"/>
+                                    <label class="form-control-label">Служебен/личен</label>
+                                    <select class="form-control form-control-danger" id="empl-phone-type-1">
+                                        <option selected="true" value="">Избери от падащото меню</option>
+                                        <div th:each="phoneType : ${phoneTypes}">
+                                            <option th:value="${phoneType}" th:text="${phoneType}"></option>
+                                        </div>
+                                    </select>
+                                    <label class="form-control-label">Допълн. инфо</label>
+                                    <input type="text" id="phone-description-1" class="form-control form-control-danger"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="rank">Звание</label>
+                        <select class="form-control form-control-danger dropdown-validate" th:attr="employeeId=${employee.id}" id="rank">
+                            <option th:selected="${employee.rankId} == 0" value="0">Избери от падащото меню</option>
+                            <div th:each="rank : ${ranks}">
+                                <option th:selected="${employee.rankId} == ${rank.id}" th:value="${rank.id}" th:text="${rank.name}"></option>
+                            </div>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div>
+                            <label class="form-control-label boolean-label">Активен ли е : </label>
+                            <div class="form-control boolean-value-box" id="isActive">
+                                <i th:classappend="${employee.isActive}? 'fa-check boolean-positive' : 'fa-times boolean-negative'" class="fa fa-2x boolean-picker pickable" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-cont">
+                        <a class="btn btn-success pickable" id="empl-main-button" th:attr="employeeId=${employee.id}">Запази</a>
+                    </div>
+                </form>
+            </div>
+            <script th:src="@{/js/employees/editEmployee.js}"></script>
+            <script th:src="@{/js/EGNManager.js}"></script>
+        </main>
+
+    </div>
+    <script th:src="@{/jquery/jquery.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    </body>
+</html>

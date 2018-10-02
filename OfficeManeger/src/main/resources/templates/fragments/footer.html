@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{css/custom.css}"/>
+    <link rel="stylesheet" href="../../static/bootstrap/font-awesome/css/font-awesome.min.css"
+          th:href="@{bootstrap/font-awesome/css/font-awesome.min.css}">
+</head>
+
+<body>
+<footer th:fragment="footer_main">
+    <p onclick="topFunction()" id="scrollButton">
+        <i class="fa fa-angle-double-up fa-3x" aria-hidden="true"></i>
+    </p>
+
+    <hr>
+
+    <p>&#169; <span>2018</span></p>
+    <script th:src="@{/jquery/jquery.min.js}"></script>
+    <script th:src="@{/jquery/jquery-ui.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/RegExPatternConstants.js}"></script>
+    <script th:src="@{/js/cookie.js}"></script>
+    <script th:src="@{/js/dialogBoxes.js}"></script>
+    <script th:src="@{/js/RegExPatternConstants.js}"></script>
+    <script th:src="@{/js/ValidationListeners.js}"></script>
+    <script th:src="@{/js/InputHelpLabels.js}"></script>
+    <script th:src="@{/js/InputValidatorContainer.js}"></script>
+    <script th:src="@{/js/PageInfoBox.js}"></script>
+    <script th:src="@{/js/RestPaginationManager.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+</footer>
+
+</body>
+</html>

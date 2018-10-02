@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Login</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{/css/custom.css}"/>
+</head>
+<body>
+<div class="container">
+    <main>
+        <div id="admin-employees" sec:authorize="hasRole('ADMIN') or hasRole('BOSS')">
+            <div id="admin-employees-head">
+                <h3 class="center-text">Служители</h3>
+                <a id="add-employee-button" class="btn btn btn-success pickable" sec:authorize="hasRole('ADMIN')">+ Добави служител</a>
+            </div>
+            <br/>
+            <div id="adminEmployeesList">
+                <table class="table table-hover table-striped table-sm" id="adminEmployeesTable">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Имена</th>
+                        <th>служебен номер</th>
+                        <th>звание</th>
+                        <th>структорно звено</th>
+                        <th>активен</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="employee, iter : ${employees}" th:object="${employee}" th:attr="id=|employee_${employee.id}|">
+                        <th scope="row" th:text="${iter.count}"></th>
+                        <td th:text="*{fullName}"></td>
+                        <td th:text="*{officiaryID}"></td>
+                        <td th:text="*{rankName}"></td>
+                        <td th:text="*{businessUnitName}"></td>
+                        <td>
+                            <p th:classappend="*{!isActive}? 'hideTextInMenu'"><i class="fa fa-check" aria-hidden="true"></i></p>
+                            <p th:classappend="*{isActive}? 'hideTextInMenu'"><i class="fa fa-times" aria-hidden="true"></i></p>
+
+                        </td>
+                        <td class="button-cont">
+                            <a th:href="@{|/employees/edit/${employee.id}|}" class="btn btn-sm btn-warning">Edit</a>
+                            <a th:href="@{|/viewEmployeeAccounts/${employee.id}|}" class="btn btn-sm btn-info">Акаунти</a>
+                            <a th:attr="employeeId=${employee.id}, employeeNames=${employee.fullName}" class="btn btn-sm btn-danger delete-employee-button">Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <script th:src="@{/js/employees/viewAllEmployees.js}"></script>
+    </main>
+
+</div>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

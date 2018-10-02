@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Login</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{/css/custom.css}"/>
+</head>
+<body>
+<div class="container">
+    <main  sec:authorize="hasRole('ADMIN')">
+        <div class="col-6 empl-main-cont">
+            <h1 class="center-text">Създаване на нов акаунт</h1>
+            <form class="center-size">
+                <div class="form-group">
+                    <label class="form-control-label" for="employee">Служител</label>
+                    <select class="form-control form-control-danger dropdown-validate invalid-input" id="employee">
+                        <option selected value="0">Избери от падащото меню</option>
+                        <div th:each="employee : ${employees}">
+                            <option th:value="${employee.id}" th:text="${employee.fullNameAndOfficiaryId}"></option>
+                        </div>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="role">Роля</label>
+                    <select class="form-control form-control-danger dropdown-validate invalid-input" id="role">
+                        <option selected value="0">Избери от падащото меню</option>
+                        <div th:each="role : ${roles}">
+                            <option th:value="${role.id}" th:text="${role.authority}"></option>
+                        </div>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="inputUserName" >Username</label>
+                    <input type="text" class="form-control form-control-danger username-validate invalid-input" id="inputUserName"/>
+
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="inputPassword">Password</label>
+                    <input type="password" class="form-control form-control-danger password-validate invalid-input" id="inputPassword"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="inputConfirmPassword">ConfirmPassword</label>
+                    <input type="password" class="form-control form-control-danger password-validate invalid-input" id="inputConfirmPassword"/>
+                </div>
+
+
+                <div class="button-cont">
+                    <a class="btn btn-success pickable" id="createAccountButton">Създай</a>
+                </div>
+            </form>
+        </div>
+        <script th:src="@{/js/user/createEmployeeAccount.js}"></script>
+    </main>
+
+</div>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

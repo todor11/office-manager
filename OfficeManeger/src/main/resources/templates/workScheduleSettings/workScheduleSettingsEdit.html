@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Добавене на отпуск</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{/css/custom.css}"/>
+</head>
+<body>
+<main class="container">
+    <div class="col-6" id="workScheduleSettingsEditCont">
+        <h3 class="center-size">Редактиране настройките на графика</h3>
+        <form class="center-size">
+            <div class="form-group">
+                <label class="form-control-label bold-text" for="numbOfEmployeesInShift">Брой служители в смяната :</label>
+                <input type="number" class="form-control form-control-danger" th:value="${settings.numbOfEmployeesInShift}" id="numbOfEmployeesInShift"/>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label boolean-label bold-text" >Двусменен режим</label>
+                <div class="form-control boolean-value-box half-size" id="isOnDoubleShiftRegime">
+                    <i class="fa fa-2x pickable boolean-picker" th:classappend="${settings.isOnDoubleShiftRegime} ? 'fa-check boolean-positive' : 'fa-times boolean-negative'" aria-hidden="true"></i>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label boolean-label bold-text" >Трисменен режим</label>
+                <div class="form-control boolean-value-box half-size" id="isOnTripleShiftRegime">
+                    <i class="fa fa-2x pickable boolean-picker" th:classappend="${settings.isOnTripleShiftRegime} ? 'fa-check boolean-positive' : 'fa-times boolean-negative'" aria-hidden="true"></i>
+                </div>
+            </div>
+            <div class="form-group" id="allShiftTypesCont">
+                <label class="form-control-label bold-text" id="allShiftTypesContLabel">Групи работни смени : </label>
+                <div th:each="shiftTypeGroup, iter : ${settings.allShiftTypeGroups}" th:object="${shiftTypeGroup}">
+                    <label class="form-control-label boolean-label half-size" th:text="|*{groupName} :|"></label>
+                    <div class="form-control boolean-value-box half-size groupBox"  th:attr="shiftTypeGroupId=*{id}">
+                        <i class="fa fa-2x pickable boolean-picker" th:classappend="*{isInSettings} ? 'fa-check boolean-positive' : 'fa-times boolean-negative'" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-cont">
+                <a class="btn btn-success pickable" id="saveButton" th:attr="settingsId=${settings.id}">Запази</a>
+            </div>
+        </form>
+    </div>
+    <script th:src="@{/js/workScheduleSettings/workScheduleSettingsEdit.js}"></script>
+</main>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

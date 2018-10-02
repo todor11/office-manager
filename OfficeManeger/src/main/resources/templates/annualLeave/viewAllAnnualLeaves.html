@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Login</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{/css/custom.css}"/>
+</head>
+<body>
+<div class="container">
+    <main>
+        <div id="admin-annualLeaves" sec:authorize="hasRole('ADMIN')">
+            <div id="adminAnnualLeavesList">
+                <table class="table table-hover table-striped table-sm" id="annualLeavesTable">
+                    <thead>
+                    <tr>
+                        <th >Служител</th>
+                        <th th:each="activeAnnualLeaveType, iter : ${activeAnnualLeaveTypes}" th:text="${activeAnnualLeaveType}"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="employee, iter : ${employees}" th:object="${employee}" th:attr="id=|employee_${employee.id}|">
+                        <td th:text="*{fullName}"></td>
+                        <td th:each="annualLeave, iter : ${employee.annualLeaves}" th:object="${annualLeave}">
+                            <input type="number" class="allAnnualLeaveInput" th:attr="employeeId=${employee.id}, annualLeaveId=${annualLeave.id}" th:value="${annualLeave.numberOfAnnualLeave}"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <script th:src="@{/js/annualLeave/viewAllAnnualLeaves.js}"></script>
+    </main>
+
+</div>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

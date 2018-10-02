@@ -1,0 +1,843 @@
+:root {
+    --main-color: #f7f5e6;
+    --second-main-color: #e8e8e8;
+    --primary-element-color: #333a56;
+    --element-color: #52658f;
+    --element-hover-color: #c5c0c0;
+}
+
+body{
+    margin: auto;
+    background-color: var(--main-color);
+    -webkit-font-smoothing: antialiased;
+    font: normal 15px Roboto,arial,sans-serif;
+    align-content: center;
+    color: var(--primary-element-color);
+}
+
+a{
+    color: var(--element-color);
+    text-decoration: none;
+}
+
+a:focus, a:hover {
+    text-decoration: none;
+    color: var(--primary-element-color);
+}
+
+.main-manu {
+    background-color: var(--primary-element-color);
+    min-height: 50px;
+    width: 100%;
+}
+
+.abs-center-x {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: var(--second-main-color);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    top: 30px;
+    width: -moz-fit-content;
+    width: fit-content;
+}
+
+.dropdown-content a {
+    color: var(--primary-element-color);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color:  var(--element-hover-color);
+}
+
+.dropdown-container:hover .dropdown-content {
+    display: block;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: var(--main-color);
+}
+
+.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+    color: var(--second-main-color);
+}
+
+#scrollButton{
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    cursor: pointer;
+
+    width: 35px;
+    height: 35px;
+    border-radius: 15px;
+}
+
+.forms{
+    margin: 20px auto;
+    min-width: 250px;
+}
+
+.page-container{
+    margin: 20px 0;
+}
+
+.workdays-table{
+    width: 450px;
+}
+
+.annual-leave-type-table{
+    width: 600px;
+}
+
+th{
+    text-align: center;
+}
+
+.office-table{
+    float: left;
+    padding: 5px;
+    margin: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    text-align: center;
+    margin-top: 20px;
+}
+
+#newWorkDayInput{
+    height: 36px;
+}
+
+#newHolidayInput{
+    height: 36px;
+}
+
+footer{
+    text-align: center;
+}
+
+.annual-leave-type-label{
+    font-size: medium;
+    font-style: italic;
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+.positive-box {
+    color: #304083;
+    background-color: #4eff00;
+}
+
+.negative-box {
+    color: red;
+    background-color: #ffd800;
+}
+
+.negative-box .modal-footer .btn {
+    background-color: #06938e;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.hideText {
+    display: none;
+}
+
+.shift-type-label {
+    font-style: italic;
+    font-size: 12px;
+}
+
+.btn {
+    cursor:pointer;
+}
+
+.pickable {
+    cursor:pointer;
+}
+
+.bu-main-unit {
+    width: 300px;
+}
+
+.bu-bordered {
+    border: 1px dotted var(--primary-element-color);;
+    padding: 15px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.ub-row {
+    padding: .5rem .75rem;
+    font-size: 1rem;
+}
+
+.bu-short {
+    width: 280px;
+    margin: 0 10px;
+}
+
+.bu-short-label {
+    width: 85px;
+    margin: 0 10px;
+    align-self: center;
+}
+
+#bu-main-button {
+    font-size: large;
+    color: var(--second-main-color);
+}
+
+.ub-box-label {
+    padding-left: 10px;
+    font-size: 16px;
+    width: 110px;
+    font-style: italic;
+}
+
+.bu-main-unit-label {
+    font-size: 20px;
+    padding-left: 20px;
+}
+
+.bu-employee-row {
+    margin: 5px 10px;
+}
+
+.bu-create-button {
+    margin: 6px 5px 0 30px;
+}
+
+.empl-main-cont{
+    margin: 0 auto;
+}
+
+.empl-main-cont form .form-group{
+    margin: 15px;
+}
+
+#phone-container {
+}
+
+.empl-phone-card{
+}
+
+.empl-phone-header {
+    padding: 10px;
+}
+
+.empl-cont-a {
+    width: 100%;
+    display: block;
+}
+
+.empl-card-block label {
+    margin-top: 15px;
+}
+
+.empl-card-block label:first-child{
+    margin-top: 5px;
+}
+
+.button-cont {
+    text-align: center;
+    color: white;
+}
+
+.fa-check {
+    color: green;
+}
+
+.fa-times {
+    color: red;
+}
+
+.required-text {
+    color: #ff5100;
+}
+
+.recommendable-text {
+    color: #0439f6;
+}
+
+.valid-text {
+    color: green;
+}
+
+.invalid-input {
+    box-shadow: 0px 0px 1px 1px #fea9a9 inset;
+    border: 1px #f55 solid;
+}
+
+.invalid-input:focus {
+    box-shadow: 0px 0px 1px 1px #fea9a9 inset;
+    border: 1px #f55 solid;
+}
+
+#workShift-table {
+    display: inline-block;
+    padding: 10px;
+}
+
+#workShift-table td {
+    width: 50px;
+    padding: 0;
+    text-align: center;
+    border: 1px solid #4b4f5c;
+    height: 20px;
+}
+
+#workShift-table input {
+    width: 50px;
+    text-align: center;
+    background-color: inherit;
+    border: none;
+    position: relative;
+    height: 22px;
+    top: -11px;
+}
+
+#workShift-table th {
+    width: 50px;
+    padding: 0;
+    text-align: center;
+    border: 1px solid #4b4f5c;
+}
+
+#workShift-table tr td:first-child {
+    width: 250px;
+    text-align: left;
+    padding-left: 5px;
+}
+
+#workShift-table tr th:first-child {
+    width: 250px;
+    text-align: left;
+    padding-left: 5px;
+}
+
+.table-inverse {
+    color: var(--main-color);
+    background-color: #a1d6e2;
+}
+
+.table-workShift {
+    color: var(--main-color);
+    background-color: #7d8081;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.table-container {
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    text-align: center;
+    background-color: #fff;
+    border-radius: 10px;
+    padding-top: 15px;
+}
+
+.today-in-table{
+    background-color: gold;
+}
+
+.holiday-in-table{
+    background-color: moccasin;
+}
+
+.chooseEmployeeShiftBox {
+    background-color: #ecede1;
+    padding: 10px;
+    border-radius: 5px;
+    position: fixed;
+    top: 180px;
+    left: -490px;
+    border: 2px solid #333a56;
+    z-index: 3;
+}
+
+.chooseEmployeeShiftBox fieldset {
+    margin: 0 auto;
+    display: inline-block;
+}
+
+.emplShiftLabelLegend {
+    text-align: center;
+    border-bottom: 1px solid #333a56;
+    width: 100%;
+    height: 45px;
+    margin: 0 auto;
+    background-color: #333a56;
+    color: white;
+}
+
+.emplShiftLabelLegendRow {
+    height: 20px;
+}
+
+.workShift-main-label-el {
+    display: inline-block;
+}
+
+#right-date-workShift {
+    float: right;
+    margin: auto 35px;
+    position: relative;
+    bottom: -10px;
+}
+
+#left-date-workShift {
+    float: left;
+    margin: auto 35px;
+    position: relative;
+    bottom: -10px;
+    left: 225px;
+}
+
+.date-workShift-inner {
+    border: 1px solid #746f6f;
+    border-radius: 12px;
+    width: 46px;
+    background-color: #ddd6d6;
+    height: 22px;
+    box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.2);
+    margin: 2px;
+    display: inline-block;
+
+}
+
+.date-workShift-inner span {
+    font-weight: bold;
+}
+
+.date-workShift-inner a {
+    position: relative;
+    top: 1px;
+}
+
+.selectedWorkShiftCellInTable {
+    background-color: #aeacac;
+}
+
+.maxWidth {
+    width: 100%;
+}
+
+#add-new-employee-button {
+    margin-top: 15px;
+}
+
+.hideTextInMenu {
+    display: none;
+}
+
+#adminEmployeesTable th{
+    vertical-align: middle;
+    text-align: left;
+}
+
+.boolean-label {
+    width: 60%;
+    text-align: right;
+}
+
+.boolean-value-box {
+    text-align: center;
+    width: 55px;
+    padding: 0 0 0 0;
+    display: inline-block;
+    border: none;
+    background-color: inherit;
+}
+
+.workShift-multiple-element {
+}
+
+#addMultipleBlock {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+#adminAnnualLeavesList th {
+    text-align: left;
+}
+
+#adminAnnualLeavesList input {
+    text-align: center;
+    background-color: inherit;
+    border: none;
+    width: 70px;
+}
+
+#addMultipleTable input, #addMultipleTable select {
+    height: 35px;
+    text-align: center;
+}
+
+.chooseEmployeeShiftBoxTime {
+    display: none;
+    width: 150px;
+    border-left: solid 2px;
+    padding: 9px;
+    float: right;
+}
+
+.chooseEmployeeShiftBoxTime input {
+    width: 140px;
+}
+
+.addCustomShiftTimeButton {
+}
+
+.addCustomTimeButtonContainerLabels {
+    width: 216px;
+    color: red;
+}
+
+.secondTimeTime {
+    visibility: hidden;
+}
+
+.workShiftTablEmpl {
+    font-size: 17px;
+}
+
+.isEndOnNextDayBox {
+    width: 100%;
+}
+
+.employeeShiftCustomTime {
+    color: blue;
+    position: relative;
+    z-index: 2;
+    top: -13px;
+    left: -21px;
+}
+
+.dateInWorkshiftMulty {
+    width: 120px;
+}
+
+.accountUsername {
+    background-color: inherit;
+    border: none;
+    width: 100%;
+}
+
+#adminAccountsList {
+    width: 800px;
+    margin: 0 auto;
+}
+
+.accountRoleSelect {
+    width: 95%;
+    background-color: inherit;
+    border: none;
+}
+
+#adminAccountsTable th {
+    text-align: left;
+    vertical-align: middle;
+}
+
+#changePasswordCont {
+    margin: 0 auto;
+}
+
+#annualLeaveRequestTableCont {
+    background-color: #fff;
+    margin-top: 20px;
+}
+
+#employeeAnnualLeaveTable {
+    text-align: center;
+}
+
+.annualLeaveRequestInputs {
+    width: 144px;
+    margin: 0 5px;
+}
+
+#requestContainer {
+    margin-bottom: 20px;
+}
+
+.annualLeaveInputsBlock {
+    margin: 3px 0;
+}
+
+#bossViewRequestsTable {
+    background-color: white;
+}
+
+#workScheduleSettingsEditCont {
+    margin:  0 auto;
+}
+
+#workScheduleSettingsEditCont form {
+    margin:  20px auto;
+}
+
+#allShiftTypesCont {
+    margin: 25px auto;
+}
+
+#allShiftTypesContLabel {
+    display: block;
+    text-align: center;
+}
+
+.bold-text {
+    font-weight: bold;
+}
+
+.half-size {
+    max-width: 50%;
+}
+
+#workShift-table .workScheduleCell {
+    width: 135px;
+    padding: 0;
+    text-align: center;
+    border: 1px solid #4b4f5c;
+    height: 20px;
+}
+
+.shiftOverPayHours {
+    color: black;
+    position: relative;
+    z-index: 2;
+    top: 2px;
+    left: 2px;
+    background-color: orange;
+    border-radius: 10px;
+    font-size: 11px;
+    width: 13px;
+    height: 13px;
+    display: block;
+}
+
+.shiftOverPayHoursBox {
+    position: absolute;
+}
+
+.emplScheduleBox {
+    width: 100%;
+    min-height: 40px;
+}
+
+.emplNamesScheduleBox {
+    padding-left: 2px;
+    padding-right: 2px;
+    width: 100%;
+    min-width: 130px;
+}
+
+.emplPersScheduleBox {
+    margin: 0px;
+    display: inline;
+    width: 115px;
+}
+
+.deleteEmplInScheduleBox {
+    margin: 0px;
+    display: inline;
+    width: 15px;
+}
+
+.removeBox {
+    width: 14px;
+    height: 14px;
+    background-color: cyan;
+    color: red;
+    text-align: center;
+}
+
+.disableShiftCell {
+    background-color: dimgray;
+}
+
+.workScheduleChooseEmployeeShiftBox {
+    background-color: #ecede1;
+    border-radius: 5px;
+    position: absolute;
+    top: 80px;
+    left: -1490px;
+    border: 1px solid #333a56;
+    z-index: 3;
+    width: 800px;
+    box-shadow: 1px 1px rgba(4, 5, 66, 0.4);
+    padding-bottom: 10px;
+}
+
+.workScheduleEmplShiftLabelLegendRow {
+    height: 25px;
+    width: 100%;
+}
+
+.emplInWorkScheduleBox {
+    margin: 0px;
+    margin-left: 0px;
+    display: inline-block;
+    width: 20px;
+    margin-left: 10px;
+    font-size: 18px;
+}
+
+.possibleEmplNames {
+    display: inline-block;
+    color: #898383;
+}
+
+.selectedEmployeeInShift {
+    font-weight: bold;
+    color: #292b2c;
+}
+
+.workScheduleEmployeeBox {
+    margin: 5px 0px;
+    cursor: pointer;
+}
+
+.activeWorkScheduleCell {
+    background-color: #6af30b;
+}
+
+.workScheduleButtonBox {
+    margin: 0 10px;
+    display: inline-block;
+}
+
+.workScheduleButtonCont {
+    margin: 0 auto;
+}
+
+.workScheduleFieldset {
+    margin: 0px;
+}
+
+.workScheduleEmployeeBoxCont {
+    border-bottom: 1px solid #333a56;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+.activeEmplBox {
+    display: block;
+    padding: 10px;
+    background-color: #90f890;
+}
+
+.allEmplBox {
+    float: left;
+    width: 70%;
+    border-left: 1px solid #333a56;
+    background-color: #f7ffd4;
+}
+
+.possibleEmplBox {
+    display: block;
+    padding: 10px;
+    border-top: 1px solid #333a56;
+}
+
+.leftEmplBox {
+    float: left;
+    width: 30%;
+    height: 100%;
+    background-color: floralwhite;
+}
+
+.leftEmplBox label {
+    text-align: center;
+    font-weight: bold;
+    font-style: oblique;
+    display: block;
+}
+
+.workScheduleTable th {
+    text-align: left;
+    font-style: oblique;
+}
+
+.workShiftRadioCont {
+    padding: 10px;
+}
+
+.addEmplToScheduleBtn {
+    height: 25px;
+}
+
+.addEmplToScheduleBtn a {
+    height: 100%;
+    padding: 1px 10px;
+}
+
+.workScheduleTable td {
+    padding: 2px .75rem;
+}
+
+#userViewAnnualLeavesBlock {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#scrollerWorkShift {
+    display: none;
+    z-index: 3;
+    position: absolute;
+    background-color: rgba(237, 237, 237, 0.5);
+    width: 1110px;
+    height: 100%;
+}
+
+#scrollerWorkShift i {
+    position: relative;
+    top: 20%;
+}
+
+#scrollerWorkShift h2 {
+    position: relative;
+    top: 30%;
+    color: orange;
+}
+

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Login</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{/css/custom.css}"/>
+</head>
+<body>
+<div class="container">
+    <main>
+        <div id="admin-employees" sec:authorize="hasRole('ADMIN')">
+            <div id="admin-employees-head">
+                <h3 class="center-text" th:text="|Акаунти на ${employee.fullNameAndOfficiaryId}|"></h3>
+            </div>
+            <br/>
+            <div id="adminAccountsList">
+                <table class="table table-hover table-striped table-sm" id="adminAccountsTable">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>username</th>
+                        <th>активен</th>
+                        <th>роля</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="account, iter : ${accounts}" th:object="${account}" th:attr="id=|account_${account.id}|">
+                        <th scope="row" th:text="${iter.count}"></th>
+                        <td>
+                            <input class="accountUsername" th:attr="accountId=${account.id}, oldValue=*{username}" th:value="*{username}"/>
+                        </td>
+                        <td class="boolean-value-box" th:attr="accountId=*{id}">
+                            <i class="fa fa-2x pickable" th:classappend="*{isEnabled}? 'fa-check boolean-positive' : 'fa-times boolean-negative'" aria-hidden="true"></i>
+                        <td>
+                            <select th:attr="accountId=*{id}" class="accountRoleSelect">
+                                <div th:each="role : ${roles}">
+                                    <option th:selected="${role.id} == ${account.role.id}" th:value="${role.id}" th:text="${role.authority}"></option>
+                                </div>
+                            </select>
+                        </td>
+                        <td class="button-cont">
+                            <a th:attr="accountId=*{id}, username=*{username}" class="btn btn-sm btn-warning resetPassword-button">Reset password</a>
+                            <a th:attr="accountId=*{id}, username=*{username}" class="btn btn-sm btn-danger delete-account-button">Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <script th:src="@{/js/user/viewEmployeeAccounts.js}"></script>
+    </main>
+
+</div>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Добавене на отпуск</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{/css/custom.css}"/>
+</head>
+<body>
+<main class="container">
+    <div id="bossAnnualLeaveRequestCont" class="center-text">
+        <h5 class="center-text" th:classappend="${hasRequests} ? 'hideText'">Няма заявления за отпуски !</h5>
+        <h5 class="center-text" th:classappend="${!hasRequests} ? 'hideText'">Заявления за отпуски :</h5>
+        <table id="bossViewRequestsTable" class="table table-striped" th:classappend="${!hasRequests} ? 'hideText'" >
+            <thead>
+            <tr>
+                <th class="">дата</th>
+                <th class="">служител</th>
+                <th class="">тип отпуск - дни</th>
+                <th class="">начална дата</th>
+                <th class="">крайна дата</th>
+                <th class="">общо дни</th>
+                <th class=""></th>
+            </tr>
+            </thead>
+            <tbody id="bossViewRequestsTable-body">
+            <tr class="requestRow" th:each="request, iter : ${requests}" th:object="${request}" th:attr="id=|requestId_*{id}|,employeeId=*{employeeId},startDate=${#temporals.format(request.startDate, 'dd-MM-yyyy')},endDate=${#temporals.format(request.endDate, 'dd-MM-yyyy')}">
+                <th class="" th:classappend="*{!isViewed} ? 'boldText'" th:text="*{creationDateTime}"></th>
+                <th class="" th:classappend="*{!isViewed} ? 'boldText'" th:text="*{employeeFullNameAndOfficiaryId}"></th>
+                <th class="" th:classappend="*{!isViewed} ? 'boldText'">
+                    <div th:utext="*{typeAndNumbOfDays}"></div>
+                </th>
+                <th class="" th:classappend="*{!isViewed} ? 'boldText'" th:text="|${#temporals.format(request.startDate, 'dd.MM.yyyy')} г.|"></th>
+                <th class="" th:classappend="*{!isViewed} ? 'boldText'" th:text="|${#temporals.format(request.endDate, 'dd.MM.yyyy')} г.|"></th>
+                <th class="" th:classappend="*{!isViewed} ? 'boldText'" th:text="*{numbOfDays}"></th>
+                <th class="button-cont">
+                    <a th:attr="requestId=*{id},employeeId=*{employeeId}" class="btn btn-sm btn-success execute-request-button">Разреши</a>
+                    <a th:attr="requestId=*{id},employee=*{employeeFullNameAndOfficiaryId}" class="btn btn-sm btn-danger delete-request-button">Изтрий</a>
+                </th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br/>
+    <div class="table-container" id="tableContainer">
+        <div id="scrollerWorkShift">
+            <i class="fa fa-spinner fa-spin fa-4x"></i>
+            <h2 class="center-text">Заявката се изпълнява... , моля изчакайте!</h2>
+        </div>
+        <div id="workShift-main-label">
+            <div class="workShift-main-label-el" id="left-date-workShift">
+                <div>
+                    <div class="date-workShift-inner pickable" id="leftBigButton">
+                        <a class="">
+                            <i class="fa fa fa-chevron-left fa-lg" aria-hidden="true"></i>
+                            <span>30</span>
+                        </a>
+                    </div>
+                    <div class="date-workShift-inner pickable" id="leftSmallButton">
+                        <a class="">
+                            <i class="fa fa fa-chevron-left fa-lg" aria-hidden="true"></i>
+                            <span>5</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="workShift-main-label-el">
+                <h2 class="center-text" id="mainYearLabel">Разход</h2>
+            </div>
+
+            <div id="right-date-workShift" class="workShift-main-label-el">
+                <div>
+                    <div class="date-workShift-inner pickable" id="rightSmallButton">
+                        <a class="">
+                            <span>5</span>
+                            <i class="fa fa-chevron-right fa-lg" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                    <div class="date-workShift-inner pickable" id="rightBigButton">
+                        <a class="">
+                            <span>30</span>
+                            <i class="fa fa-chevron-right fa-lg" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <table id="workShift-table" class="table table-striped">
+            <thead>
+            <tr>
+                <th class="workShiftTablEmpl">Служител</th>
+                <th class="wsh-table-head" th:classappend="*{isToday} ? ('col_' + *{shortDateCl} + ' today-in-table') : (*{isHoliday} ? ('col_' + *{shortDateCl} + ' holiday-in-table') : ('col_' + *{shortDateCl}))" th:each="date, iter : ${dates}" th:object="${date}" ><div th:text="*{htmlText}"></div></th>
+            </tr>
+            </thead>
+            <tbody id="workShifts-table-body">
+            <tr th:each="workShift, iter : ${workShifts}" th:object="${workShift}" th:attr="id=|employeeRow_${workShift.employee.id}|">
+                <td class="emplShift workShiftTablEmpl" th:classappend="('row_' + ${workShift.employee.id})"  th:attr="id=|empl_${workShift.employee.id}|">
+                    <div class="tooltipOwner" th:attr="id=|employeeName_${workShift.employee.id}|,title=${workShift.employee.tooltipText}" th:text="${workShift.employee.fullName}" data-toggle="tooltip" data-placement="top" data-html="true"></div>
+                </td>
+                <td class="emplShift" th:classappend="${employeeShift.isToday} ? ('col_' + ${employeeShift.shortDate} + ' row_' + ${workShift.employee.id} + ' today-in-table') : (${employeeShift.isHoliday} ? ('col_' + ${employeeShift.shortDate} + ' row_' + ${workShift.employee.id} + ' holiday-in-table') : ('col_' + ${employeeShift.shortDate} + ' row_' + ${workShift.employee.id}))" th:attr="id=|${workShift.employee.id}_${employeeShift.date}|,isHoliday=${employeeShift.isHoliday},isTypicalWorkDay=${employeeShift.isTypicalWorkDay},isTypicalRestDay=${employeeShift.isTypicalRestDay},isLastWorkDayBeforeRestDay=${employeeShift.isLastWorkDayBeforeRestDay},isLastRestDayBeforeWorkDay=${employeeShift.isLastRestDayBeforeWorkDay},inputOldValue=${employeeShift.typeAsString},employeeId=${workShift.employee.id},row=|row_${workShift.employee.id}|,col=|col_${employeeShift.shortDate}|,employeeShiftBox=|employeeShiftBox-${workShift.employee.id}|,employeeShiftId=${employeeShift.id}" th:each="employeeShift, iter : ${workShift.employeeShifts}" th:object="${employeeShift}">
+                    <div style="position: absolute">
+                        <input class="tooltipOwner" th:attr="title=${employeeShift.tooltipText},employeeShiftId=${employeeShift.id},employeeId=${workShift.employee.id}" th:value="${employeeShift.typeAsString}" data-toggle="tooltip" data-placement="top" data-html="true"/>
+                        <i class="employeeShiftCustomTime fa fa-asterisk" th:style="${employeeShift.hasCustomTime} ? '' : 'display:none'"  data-toggle="tooltip" data-placement="top" data-html="true" title=""></i>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="addMultipleBlock">
+        <div>
+            <h3 class="center-text">Добавяне едновременно в много дни</h3>
+        </div>
+        <div class="workShift-multiple-element">
+            <table class="table table-hover table-striped" id="addMultipleTable">
+                <thead class="table-workShift">
+                <tr>
+                    <th>Служител</th>
+                    <th class="dateInWorkshiftMulty">Начална дата вкл.</th>
+                    <th class="dateInWorkshiftMulty">Крайна дата вкл.</th>
+                    <th>Смяна</th>
+                    <th id="isRDH">Почивни дни ?</th>
+                    <th id="numbOfALH" class="hideText">Брой дни отпуск</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <select class="form-control form-control-danger" id="employeeMultipleAdd">
+                            <option selected value="0">Избери служител</option>
+                            <option th:each="workShift, iter : ${workShifts}" th:object="${workShift}" th:value="${workShift.employee.id}" th:text="${workShift.employee.fullName}"></option>
+                        </select>
+                    </td>
+                    <td class="dateInWorkshiftMulty">
+                        <input type="text" class="dateInWorkshiftMulty date-validate" placeholder="dd.MM.yyyy" id="startDate" />
+                    </td>
+                    <td class="dateInWorkshiftMulty">
+                        <input type="text" class="dateInWorkshiftMulty date-validate" placeholder="dd.MM.yyyy" id="endDate" />
+                    </td>
+                    <td>
+                        <select class="form-control form-control-danger" id="employeeShiftMultipleAdd">
+                            <option selected value="0">Избери смяна</option>
+                            <option th:each="regularShiftType, iter : ${regularShiftTypes}" th:value="${regularShiftType.id}" th:text="${regularShiftType.fullName}"></option>
+                            <option th:each="notRegularShiftType, iter : ${notRegularShiftTypes}" th:value="${notRegularShiftType.id}" th:text="${notRegularShiftType.fullName}"></option>
+                        </select>
+                    </td>
+                    <td id="isRDT">
+                        <div class="form-control boolean-value-box" id="addToHolidayToo">
+                            <i class="fa fa-2x fa-times boolean-negative boolean-picker pickable" aria-hidden="true"></i>
+                        </div>
+                    </td>
+                    <td id="numbOfALT" class="hideText">
+                        <input type="number" class="" value="0" id="numbOfAnnualLeave" />
+                    </td>
+                    <td>
+                        <div class="button-cont">
+                            <a class="btn btn-success pickable" id="addMultipleButton">Добави</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="chooseEmployeeShiftBox" th:attr="id=|employeeShiftBox-${workShift.employee.id}|" style="top: 80px;"  th:each="workShift, iter : ${workShifts}" th:object="${workShift}">
+        <fieldset class="form-group row">
+            <div class="emplShiftLabelLegend">
+                <div class="emplShiftLabelLegendRow"><p th:text="${workShift.employee.fullName}"></p></div>
+                <div class="emplShiftLabelLegendRow" th:attr="id=|employeeShiftBoxDate_${workShift.employee.id}|"><p th:attr="id=|emplShiftLabelLegendRowDate_${workShift.employee.id}|"></p></div>
+            </div>
+            <div class="maxWidth workShiftRadioCont">
+                <div class="form-check" th:classappend="|shiftTypeInES_${workShift.employee.id}|" th:each="regularShiftType, iter : ${regularShiftTypes}">
+                    <label class="form-check-label">
+                        <input th:value="${regularShiftType.shortName}" th:text="| ${regularShiftType.shortName} &mdash; ${regularShiftType.fullName}|" th:attr="id=|employeeShiftBox-${workShift.employee.id}_${regularShiftType.shortName}|,canBeOnWorkDay=${regularShiftType.canBeOnWorkDay},canBeOnRestDay=${regularShiftType.canBeOnRestDay},canBeOnLastWorkDayBeforeRestDay=${regularShiftType.canBeOnLastWorkDayBeforeRestDay},canBeOnLastRestDayBeforeWorkDay=${regularShiftType.canBeOnLastRestDayBeforeWorkDay}" class="form-check-input" isRegularShift="true" type="radio" name="gridRadios">
+                    </label>
+                </div>
+                <div class="form-check" th:classappend="|shiftTypeInES_${workShift.employee.id}|" th:each="notRegularShiftType, iter : ${notRegularShiftTypes}">
+                    <label class="form-check-label">
+                        <input th:value="${notRegularShiftType.shortName}" th:text="| ${notRegularShiftType.shortName} &mdash; ${notRegularShiftType.fullName}|" th:attr="id=|employeeShiftBox-${workShift.employee.id}_${notRegularShiftType.shortName}|,canBeOnWorkDay=${notRegularShiftType.canBeOnWorkDay},canBeOnRestDay=${notRegularShiftType.canBeOnRestDay},canBeOnLastWorkDayBeforeRestDay=${notRegularShiftType.canBeOnLastWorkDayBeforeRestDay},canBeOnLastRestDayBeforeWorkDay=${notRegularShiftType.canBeOnLastRestDayBeforeWorkDay}" class="form-check-input" isRegularShift="false" type="radio" name="gridRadios">
+                    </label>
+                </div>
+
+                <div class="button-cont addCustomTimeButtonContainerClass" th:attr="id=|addCustomTimeButtonContainer_${workShift.employee.id}|,employeeId=${workShift.employee.id}">
+                    <a class="btn btn-success pickable addCustomShiftTimeButton" th:attr="id=|addCustomTimeButton_${workShift.employee.id}|,elementIdToTrigger=|chooseEmployeeShiftBoxTime_${workShift.employee.id}|">Редактирай начало/край</a>
+                </div>
+                <div class="addCustomTimeButtonContainerLabels">
+                    <small>САМО при различни от стандартните часове за начало и край на смяната. Първо въведи часовете, после избери смяната</small>
+                </div>
+            </div>
+        </fieldset>
+        <div class="chooseEmployeeShiftBoxTime" th:attr="id=|chooseEmployeeShiftBoxTime_${workShift.employee.id}|">
+            <label th:attr="for=|startTime_${workShift.employee.id}|">начало:</label>
+            <input th:attr="id=|startTime_${workShift.employee.id}|,employeeId=${workShift.employee.id}" th:classappend="('firstTime_' + ${workShift.employee.id})" class="workTimeToCheck timepicker-input firstTime" type="text" placeholder="hh:mm"/>
+            <label th:attr="for=|endTime_${workShift.employee.id}|">край:</label>
+            <input th:attr="id=|endTime_${workShift.employee.id}|,employeeId=${workShift.employee.id}" th:classappend="('firstTime_' + ${workShift.employee.id})" class="workTimeToCheck timepicker-input firstTime" type="text" placeholder="hh:mm"/>
+            <label th:attr="for=|secondStartTime_${workShift.employee.id}|" th:classappend="('secondTimeTime_' + ${workShift.employee.id})" class="secondTimeTime">2 начало:</label>
+            <input th:attr="id=|secondStartTime_${workShift.employee.id}|,employeeId=${workShift.employee.id}" th:classappend="('secondTimeTime_' + ${workShift.employee.id})" class="secTimeToCheck timepicker-input secondTimeTime" type="text" placeholder="hh:mm"/>
+            <label th:attr="for=|secondEndTime_${workShift.employee.id}|" th:classappend="('secondTimeTime_' + ${workShift.employee.id})" class="secondTimeTime">2 край:</label>
+            <input th:attr="id=|secondEndTime_${workShift.employee.id}|,employeeId=${workShift.employee.id}" th:classappend="('secondTimeTime_' + ${workShift.employee.id})" class="secTimeToCheck timepicker-input secondTimeTime" type="text" placeholder="hh:mm"/>
+            <label th:attr="for=|isEndOnNextDay_${workShift.employee.id}|" class="">До следващия ден</label>
+            <div class="form-control boolean-value-box isEndOnNextDayBox" th:attr="id=|isEndOnNextDay_${workShift.employee.id}|">
+                <i class="fa fa-2x fa-times boolean-negative boolean-picker pickable" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+
+
+    <div th:replace="fragments/elements::timepicker"></div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var workShifts = [[${workShifts}]];
+        var dates = [[${dates}]];
+        var regularShiftTypes = [[${regularShiftTypes}]];
+        var notRegularShiftTypes = [[${notRegularShiftTypes}]];
+        var allShiftTypes = [[${allShiftTypes}]];
+        var annualLeaveTypeViewModels = [[${annualLeaveTypeViewModels}]];
+        /*]]>*/
+    </script>
+    <script th:src="@{/js/DateCalculator.js}"></script>
+    <script th:src="@{/js/TimeCalculator.js}"></script>
+    <script th:src="@{/js/workShift/viewWorkShifts.js}"></script>
+</main>
+    <script th:src="@{/jquery/jquery.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Login</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{/css/custom.css}"/>
+</head>
+<body>
+<div class="container">
+    <main>
+        <div class="col-sm-10 offset-sm-2 pt-3">
+            <h1>Структорни звена :</h1>
+            <div sec:authorize="hasRole('ADMIN')">
+                <a id="addBusinessUnitButton"  href="/businessUnit/create" class="btn btn-info pickable">
+                    + Добави ново структорно звено
+                </a>
+            </div>
+            <br/>
+            <div id="businessUnitList">
+                <div class="row">
+                    <label class="form-control col-sm-3 unit-label">Име на звеното</label>
+                    <label class="form-control col-sm-3 unit-label">Ръководител</label>
+                    <label class="form-control col-sm-3 unit-label">Старше звено</label>
+                </div>
+                <div class="row rank-container" th:each="businessUnit : ${businessUnits}" th:object="${businessUnit}" th:id="*{id}">
+                    <input type="text" class="updateUnitNameClass form-control col-sm-3" readonly="true" th:value="*{unitName}"/>
+                    <input type="text" class="updateBossPositionClass form-control col-sm-3" readonly="true" th:value="*{boss}"/>
+                    <input type="text" class="updateMainUnitClass form-control col-sm-3" readonly="true" th:value="*{mainUnit}"/>
+                    <div class="form-control col-sm-2 center-text button-cont" sec:authorize="isAuthenticated()">
+                        <a th:href="|/businessUnit/view/*{id}|" class="btn btn-sm btn-info" sec:authorize="hasRole('USER')">View</a>
+                        <a th:href="|/businessUnit/edit/*{id}|" class="btn btn-sm btn-info" sec:authorize="hasRole('ADMIN')">Edit</a>
+                        <a th:attr="businessUnitID=*{id}, businessUnitName=*{unitName}" class="btn btn-sm btn-danger delete-business-unit-button pickable" sec:authorize="hasRole('ADMIN')">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script th:src="@{/js/businessUnit/businessUnit.js}"></script>
+    </main>
+
+</div>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

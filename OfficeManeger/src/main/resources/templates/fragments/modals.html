@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{css/custom.css}"/>
+    <link rel="stylesheet" href="../../static/bootstrap/font-awesome/css/font-awesome.min.css"
+          th:href="@{bootstrap/font-awesome/css/font-awesome.min.css}">
+</head>
+
+<body>
+<div th:fragment="modals">
+
+    <!--  Login modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModal">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div style="color: red" th:if="${error} != null" th:text="${error}"></div>
+                    <form method="post">
+                        <div class="form-group">
+                            <label class="form-control-label" for="inputUsername">Username</label>
+                            <input type="text" class="form-control form-control-danger" id="inputUsername" name="username"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="inputPassword" th:text="#{word.password}">Password</label>
+                            <input type="password" class="form-control form-control-danger" id="inputPassword" name="password"/>
+                        </div>
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <input type="submit" class="btn btn-success" value="Log In"/>
+                    </form>
+                    <br/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--  end Login modal -->
+
+
+
+</div>
+
+</body>
+</html>

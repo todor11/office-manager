@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Login</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{/css/custom.css}"/>
+</head>
+<body>
+<div class="container">
+    <main>
+        <div class="col-sm-6 offset-sm-3 pt-3">
+            <h1>Видове отпуска :</h1>
+            <div sec:authorize="hasRole('ADMIN')">
+                <a id="addAnnualLeaveTypeButton"  class="btn btn-info">
+                    + Добави нов вид отпуск
+                </a>
+                <div id="addAnnualLeaveTypeInputs" style="display: none">
+                    <div class="row">
+                        <input id="newAnnualLeaveTypeInputFullName" type="text" class="form-control col-sm-6" placeholder="Пълно описание"/>
+                        <input id="newAnnualLeaveTypeInputShortName" type="text" class="form-control col-sm-4" placeholder="Кратко изписване"/>
+                    </div>
+                    <div class="row">
+                        <a id="annualLeaveTypeBtnSave" href="#" class="btn btn-outline-success">Save</a>
+                        <a id="annualLeaveTypeBtnCancel" href="#" class="btn btn-outline-warning">Cancel</a>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div id="annualLeaveTypeList">
+                <div class="row" sec:authorize="hasRole('ADMIN')">
+                    <h5 style="color: #b1a908">За да редактираш запис - променяш текста и натискаш ENTER</h5>
+                </div>
+                <div class="row" sec:authorize="hasRole('ADMIN')">
+                    <h5 style="color: #b1a908">За да изтриеш запис - слагаш маркера в едно от полетата му и натискаш ESC</h5>
+                </div>
+                <div class="row">
+                    <label class="form-control col-sm-6 annual-leave-type-label">Пълно описание:</label>
+                    <label class="form-control col-sm-4 annual-leave-type-label">Кратко изписване:</label>
+                </div>
+                <div class="row annualLeaveType-container" th:each="annualLeaveType : ${annualLeaveTypes}" th:object="${annualLeaveType}" th:attr="alt_id=${annualLeaveType.id}" sec:authorize="!hasRole('ADMIN')">
+                    <input type="text" class="updateFullNameClass form-control col-sm-6" readonly="true" th:value="*{fullName}"/>
+                    <input type="text" class="updateShortNameClass form-control col-sm-4" readonly="true" th:value="*{shortName}"/>
+                </div>
+                <div class="row annualLeaveType-container" th:each="annualLeaveType : ${annualLeaveTypes}" th:object="${annualLeaveType}" th:attr="alt_id=${annualLeaveType.id}" sec:authorize="hasRole('ADMIN')">
+                    <input type="text" class="updateFullNameClass form-control col-sm-6" th:value="*{fullName}" th:attr="oldData=*{fullName}"/>
+                    <input type="text" class="updateShortNameClass form-control col-sm-4" th:value="*{shortName}" th:attr="oldData=*{shortName}"/>
+                </div>
+            </div>
+        </div>
+
+        <script th:src="@{/js/annualLeaveTypes/annualLeaveTypes.js}"></script>
+    </main>
+
+</div>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

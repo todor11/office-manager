@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{css/custom.css}"/>
+    <link rel="stylesheet" href="../../static/bootstrap/font-awesome/css/font-awesome.min.css"
+          th:href="@{bootstrap/font-awesome/css/font-awesome.min.css}">
+</head>
+
+<body>
+<div th:fragment="menus" id="menus-block">
+
+    <!--  Upper menu -->
+    <nav class="navbar navbar-toggleable-md navbar-light main-manu" id="main-navbar">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+
+                <!--  menus
+                <li class="nav-item" >
+                    <a class="nav-link" href="/#">Контакти</a>
+                </li>
+                -->
+
+                <!-- Admin menus  -->
+                <li class="nav-item dropdown dropdown-container" sec:authorize="hasRole('ADMIN')">
+                    <a class="nav-link dropdown-toggle pickable" id="navbarAdminDropdownMenuView" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Преглед
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left dropdown-content" aria-labelledby="navbarAdminDropdownMenuView">
+                        <a class="dropdown-item" href="/employees/create">Създаване на служител</a>
+                        <a class="dropdown-item" href="/createEmployeeAccount">Създаване на акаунт</a>
+                        <a class="dropdown-item" href="/annualLeave/create">Добавяне отпуск на служител</a>
+                        <a class="dropdown-item" href="/businessUnit/create">Създаване на структорно звено</a>
+                        <a class="dropdown-item" href="/workdays">Работни/почивни дни</a>
+                        <a class="dropdown-item" href="/annualLeaveTypes">Видове отпуск</a>
+                        <a class="dropdown-item" href="/viewAllAnnualLeaves">Отпуски на служителите</a>
+                        <a class="dropdown-item" href="/shiftTypes">Видове работни смени</a>
+                        <a class="dropdown-item" href="/businessUnit">Структорни звена</a>
+                        <a class="dropdown-item" href="/ranks">Звания и йерархия</a>
+                        <a class="dropdown-item" href="/employees">Всички служители</a>
+                        <a class="dropdown-item" href="/boss/workShifts">Разход</a>
+                    </div>
+                </li>
+                <!-- End Admin menus  -->
+
+                <!-- Boss menus  -->
+                <li class="nav-item dropdown dropdown-container" sec:authorize="hasRole('BOSS')">
+                    <a class="nav-link dropdown-toggle pickable" id="navbarBossDropdownMenuView" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Преглед
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left dropdown-content" aria-labelledby="navbarBossDropdownMenuView">
+                        <a class="dropdown-item" href="/boss/workShifts">Разход</a>
+                        <a class="dropdown-item" href="/boss/workSchedule">График</a>
+                        <a class="dropdown-item" href="/boss/editWorkScheduleSettings">Настройки на графика</a>
+                    </div>
+                </li>
+
+                <!-- End Boss menus  -->
+
+                <!-- Administrator menus  -->
+                <li class="nav-item dropdown dropdown-container" sec:authorize="hasRole('ADMINISTRATOR')">
+                    <a class="nav-link dropdown-toggle pickable" id="navbarAdministratorDropdownMenuView" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Преглед
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left dropdown-content" aria-labelledby="navbarAdministratorDropdownMenuView">
+                        <!-- <a class="dropdown-item" href="/employees/create">Създаване на служител</a> -->
+                    </div>
+                </li>
+
+                <!-- End Administrator menus  -->
+
+                <!-- Analyst menus  -->
+                <li class="nav-item dropdown dropdown-container" sec:authorize="hasRole('ANALYST')">
+                    <a class="nav-link dropdown-toggle pickable" id="navbarAnalystDropdownMenuView" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Преглед
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left dropdown-content" aria-labelledby="navbarAnalystDropdownMenuView">
+                        <!-- <a class="dropdown-item" href="/employees/create">Създаване на служител</a> -->
+                    </div>
+                </li>
+
+                <!-- End Analyst menus  -->
+
+                <!-- User menus  -->
+                <li class="nav-item dropdown dropdown-container" sec:authorize="hasRole('USER')">
+                    <a class="nav-link dropdown-toggle pickable" id="navbarUserDropdownMenuView" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Преглед
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left dropdown-content" aria-labelledby="navbarUserDropdownMenuView">
+                        <a class="dropdown-item" href="/user/annualLeaveRequest/create">Заявление за отпуск</a>
+                        <a class="dropdown-item" href="/user/annualLeavesInfo">Информация за отпуските</a>
+                        <a class="dropdown-item" href="/user/userGetHisPaidHours">Информация за платения извънреден труд</a>
+                    </div>
+                </li>
+
+                <!-- End User menus  -->
+
+                <!-- Anonymous menus  -->
+                <li class="nav-item dropdown dropdown-container" sec:authorize="isAnonymous()">
+                    <a class="nav-link dropdown-toggle pickable" id="navbarAnonymousDropdownMenuView" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Преглед
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left dropdown-content" aria-labelledby="navbarAnonymousDropdownMenuView">
+                        <a class="dropdown-item" href="/workdays">Работни/почивни дни</a>
+                        <a class="dropdown-item" href="/annualLeaveTypes">Видове отпуск</a>
+                        <a class="dropdown-item" href="/shiftTypes">Видове работни смени</a>
+                        <a class="dropdown-item" href="/businessUnit">Структорни звена</a>
+                        <a class="dropdown-item" href="/ranks">Звания и йерархия</a>
+                        <a class="dropdown-item" href="/all/anonymousViewWorkShifts">Разход</a>
+                    </div>
+                </li>
+
+                <!-- End Anonymous menus  -->
+            </ul>
+
+            <div class="form-inline my-2 my-lg-0">
+                <ul class="navbar-nav">
+                    <li class="nav-item" sec:authorize="isAnonymous()" >
+                        <a class="nav-link pr-2" href="/login">
+                            <i class="fa fa-sign-in" aria-hidden="true"></i>
+                            <span id="loginText"> Login</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown dropdown-container" sec:authorize="isAuthenticated()">
+                        <a class="nav-link dropdown-toggle mr-3 mr-lg-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user" aria-hidden="true"> </i>
+                            <span  th:text="#{word.myAccount}" id="myAccountText"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-content" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/changePassword"  >Смяна на паролата</a>
+                        </div>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link pr-2" href="/logout" >
+                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            <span id="logoutText">Logout,<span th:text="${#authentication.getName()}"></span>
+                        </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+</body>
+</html>

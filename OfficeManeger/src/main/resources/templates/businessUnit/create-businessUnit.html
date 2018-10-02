@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Login</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{/css/custom.css}"/>
+</head>
+<body>
+<main>
+    <div class="container" sec:authorize="hasRole('ADMIN')">
+        <h1 class="center-size">Структорно звено</h1>
+        <form class="center-size bu-bordered">
+            <div class="row ub-row">
+                <label class="form-control-label bu-main-unit bu-main-unit-label">Старше структорно звено :</label>
+                <select class="form-control form-control-danger bu-main-unit" id="bu-main-unit">
+                    <option selected value="no">Не сега</option>
+                    <div th:each="businessUnit : ${businessUnits}">
+                        <option th:value="${businessUnit}" th:text="${businessUnit}"></option>
+                    </div>
+                </select>
+            </div>
+            <div class="bu-bordered">
+                <div class="row ub-row">
+                    <label class="form-control-label bu-main-unit bu-main-unit-label">Име на структорното звено :</label>
+                    <input type="text" class="form-control form-control-danger bu-main-unit" id="inputUnitName"/>
+                </div>
+
+                <fieldset class="row ub-row bu-bordered">
+                    <legend class="ub-box-label">Началник</legend>
+                    <label class="form-control-label bu-short-label">Длъжност :</label>
+                    <input type="text" class="form-control form-control-danger bu-short" id="businessUnitNewBossPosition"/>
+                    <label class="form-control-label bu-short-label">Служител :</label>
+                    <select class="form-control form-control-danger bu-short bu-select" name="businessUnitNewBossPosition" id="businessUnitNewBossNameAndID" oldData="-1"></select>
+                </fieldset>
+
+                <fieldset class="row ub-row bu-bordered" id="ub-employee-box">
+                    <legend class="ub-box-label">Служители</legend>
+                    <div class="row bu-employee-row">
+                        <label class="form-control-label bu-short-label">Длъжност :</label>
+                        <input type="text" class="form-control form-control-danger bu-short bu-empl-inputs"/>
+                        <label class="form-control-label bu-short-label">Служител :</label>
+                        <select class="form-control form-control-danger bu-short bu-select bu-empl-select" name="businessUnitNewBossPosition" oldData="-1"></select>
+                    </div>
+                    <div id="add-new-employee-button" class="button-cont">
+                        <a class="btn btn-info">Добави ново поле</a>
+                    </div>
+                </fieldset>
+
+            </div>
+            <div id="bu-main-button" class="button-cont" th:attr="data=${buttonEvent}">
+                <a class="btn btn-primary bu-create-button" th:text="${buttonName}">Запази</a>
+            </div>
+        </form>
+    </div>
+
+    <script th:src="@{/js/businessUnit/businessUnit.js}"></script>
+</main>
+
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Login</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{/css/custom.css}"/>
+</head>
+<body>
+<div class="container">
+    <main id="userViewAnnualLeavesBlock" sec:authorize="hasRole('USER')">
+        <div id="currentAnnualLeaves">
+            <h4 class="center-text">Месечен платен извънреден труд :</h4>
+            <table class="table table-hover table-striped table-sm" id="currentAnnualLeavesTable">
+                <thead>
+                <tr>
+                    <th>Месец</th>
+                    <th>Общо часове</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="monthlyPaidHour, iter : ${monthlyPaidHours}" th:object="${monthlyPaidHour}">
+                    <td th:text="*{month}"></td>
+                    <td th:text="*{paidHours}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br/>
+        <div id="usedAnnualLeaves">
+            <h4 class="center-text">Платен извънреден труд по дати :</h4>
+            <table class="table table-hover table-striped table-sm" id="usedAnnualLeavesTable">
+                <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Часове</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="paidHour, iter : ${paidHours}" th:object="${paidHour}">
+                    <td th:text="*{date}"></td>
+                    <td th:text="*{paidHours}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <script th:src="@{/js/paidHours/userGetHisPaidHours.js}"></script>
+    </main>
+
+</div>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

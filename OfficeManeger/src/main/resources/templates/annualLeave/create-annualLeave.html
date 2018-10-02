@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Добавене на отпуск</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{/css/custom.css}"/>
+</head>
+<body>
+<main class="container col-6" sec:authorize="hasRole('ADMIN')">
+    <h1 class="center-text">Добавяне отпуск на служител</h1>
+    <form class="center-size">
+        <div class="form-group">
+            <label class="form-control-label" >Тип отпуск</label>
+            <select class="form-control form-control-danger dropdown-validate invalid-input" id="annualLeaveTypeId">
+                <option selected value="0">Избери от падащото меню</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" for="inputNumberOfAnnualLeave">Брой дни отпуск</label>
+            <input type="number" value="0" class="form-control form-control-danger" id="inputNumberOfAnnualLeave"/>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label">Служител</label>
+            <select id="employeeId" class="form-control form-control-danger dropdown-validate invalid-input">
+                <option selected value="0">Избери от падащото меню</option>
+            </select>
+        </div>
+        <div class="button-cont">
+            <a class="btn btn-success pickable" id="addAnnualLeaveButton">Добави</a>
+        </div>
+    </form>
+    <script th:src="@{/js/annualLeave/addToEmployeeAnnualLeave.js}"></script>
+</main>
+    <script th:src="@{/jquery/jquery.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

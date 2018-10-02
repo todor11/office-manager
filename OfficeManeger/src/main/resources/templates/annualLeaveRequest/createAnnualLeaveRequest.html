@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Добавене на отпуск</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{/css/custom.css}"/>
+</head>
+<body>
+<main class="container col-6" sec:authorize="hasRole('USER')">
+    <h1 class="center-text">Подаване на заявление за отпуск</h1>
+
+    <div id="annualLeaveRequestTableCont">
+        <h3 class="center-text">Оставащ отпуск :</h3>
+        <table class="table table-hover table-striped" id="employeeAnnualLeaveTable">
+            <thead class="">
+            <tr>
+                <th>тип отпуск</th>
+                <th>брой дни</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="annualLeave, iter : ${annualLeaves}" th:object="${annualLeave}">
+                <td th:text="*{annualLeaveType}"></td>
+                <td th:text="*{numberOfAnnualLeave}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br/>
+    <form class="center-size">
+        <div id="requestContainer">
+            <div class="">
+                <label class="annualLeaveRequestInputs" >От кой отпуск : </label>
+                <label class="annualLeaveRequestInputs" >Начална дата : </label>
+                <label class="annualLeaveRequestInputs" >Крайна дата</label>
+                <label class="annualLeaveRequestInputs" >Брой дни отпуск</label>
+            </div>
+
+            <div id="requestDateIntervals">
+            </div>
+        </div>
+
+        <div class="button-cont">
+            <a class="btn btn-success pickable" id="createAnnualLeaveRequestButton">Изпрати</a>
+        </div>
+    </form>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var annualLeaves = [[${annualLeaves}]];
+        /*]]>*/
+    </script>
+    <script th:src="@{/js/DateCalculator.js}"></script>
+    <script th:src="@{/js/annualLeaveRequest/createAnnualLeaveRequest.js}"></script>
+</main>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

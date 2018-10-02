@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Login</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{/css/custom.css}"/>
+</head>
+<body>
+<main>
+    <div class="container">
+        <h1 class="center-size"  th:text="|${businessUnit.unitName} :|">Структорно звено</h1>
+        <form class="center-size bu-bordered">
+            <div class="row ub-row">
+                <label class="form-control-label bu-main-unit bu-main-unit-label">Старше структорно звено :</label>
+                <input type="text" disabled th:value="${businessUnit.mainUnit}"/>
+            </div>
+            <div class="bu-bordered">
+                <div class="row ub-row">
+                    <label class="form-control-label bu-main-unit bu-main-unit-label">Име на структорното звено :</label>
+                    <input type="text" disabled class="form-control form-control-danger bu-main-unit" id="inputUnitName" th:value="${businessUnit.unitName}"/>
+                </div>
+
+                <fieldset class="row ub-row bu-bordered">
+                    <legend class="ub-box-label">Началник</legend>
+                    <label class="form-control-label bu-short-label">Длъжност :</label>
+                    <input type="text" disabled class="form-control form-control-danger bu-short" th:value="${businessUnit.bossPosition.name}"/>
+                    <label class="form-control-label bu-short-label">Служител :</label>
+                    <input type="text" disabled class="form-control form-control-danger bu-short"  th:value="${businessUnit.bossPosition.employee.fullName}"/>
+                </fieldset>
+
+                <fieldset class="row ub-row bu-bordered" id="ub-employee-box">
+                    <legend class="ub-box-label">Служители</legend>
+                    <div class="row bu-employee-row" th:each="position : ${businessUnit.positions}">
+                        <label class="form-control-label bu-short-label">Длъжност :</label>
+                        <input type="text" disabled class="form-control form-control-danger bu-short" th:value="${position.name}"/>
+                        <label class="form-control-label bu-short-label">Служител :</label>
+                        <input type="text" disabled class="form-control form-control-danger bu-short bu-select" th:value="${position.employee.fullName}"/>
+                    </div>
+                </fieldset>
+
+            </div>
+        </form>
+    </div>
+
+    <script th:src="@{/js/businessUnit/businessUnit.js}"></script>
+</main>
+
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

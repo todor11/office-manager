@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{/css/custom.css}"/>
+    <link rel="stylesheet" href="../../static/bootstrap/font-awesome/css/font-awesome.min.css"
+          th:href="@{/bootstrap/font-awesome/css/font-awesome.min.css}"/>
+
+    <title>Home</title>
+</head>
+<body>
+<header th:replace="fragments/menus::menus"></header>
+<main>
+
+    <!--Anonymous home-->
+    <div id="anonymous-home" sec:authorize="isAnonymous()">
+        <h1>Anonymous home</h1>
+        <p th:text="|Структорно звено : ${businessUnitName}|"></p>
+    </div>
+
+    <!--Admin home-->
+    <div id="admin-home" sec:authorize="hasRole('ADMIN')">
+        <h1>Admin home</h1>
+
+    </div>
+
+    <!--BOSS home-->
+    <div id="boss-home" sec:authorize="hasRole('BOSS')">
+        <h1>BOSS home</h1>
+
+    </div>
+
+    <!--ADMINISTRATOR home-->
+    <div id="administrator-home" sec:authorize="hasRole('ADMINISTRATOR')">
+        <h1>ADMINISTRATOR home</h1>
+
+    </div>
+
+    <!--ANALYST home-->
+    <div id="analyst-home" sec:authorize="hasRole('ANALYST')">
+        <h1>ANALYST home</h1>
+
+    </div>
+
+    <!--USER home-->
+    <div id="user-home" sec:authorize="hasRole('USER')">
+        <h1>USER home</h1>
+
+    </div>
+
+</main>
+</body>
+</html>

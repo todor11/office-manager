@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Login</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{/css/custom.css}"/>
+</head>
+<body>
+<div class="container">
+    <main id="userViewAnnualLeavesBlock" sec:authorize="hasRole('USER')">
+        <div id="currentAnnualLeaves">
+            <h4 class="center-text">Наличен отпуск :</h4>
+            <table class="table table-hover table-striped table-sm" id="currentAnnualLeavesTable">
+                <thead>
+                <tr>
+                    <th>Тип отпуск</th>
+                    <th>Брой дни</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="currentAnnualLeave, iter : ${currentAnnualLeaves}" th:object="${currentAnnualLeave}">
+                    <td th:text="*{type}"></td>
+                    <td th:text="*{numbOfDays}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br/>
+        <div id="usedAnnualLeaves">
+            <h4 class="center-text">Ползван отпуск :</h4>
+            <table class="table table-hover table-striped table-sm" id="usedAnnualLeavesTable">
+                <thead>
+                <tr>
+                    <th>Тип отпуск</th>
+                    <th>Начална дата</th>
+                    <th>Крайна дата</th>
+                    <th>Брой дни</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="usedAnnualLeave, iter : ${usedAnnualLeaves}" th:object="${usedAnnualLeave}">
+                    <td th:text="*{type}"></td>
+                    <td th:text="*{startDate}"></td>
+                    <td th:text="*{endDate}"></td>
+                    <td th:text="*{numbOfDays}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <script th:src="@{/js/annualLeave/userViewHisAnnualLeaveInfo.js}"></script>
+    </main>
+
+</div>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

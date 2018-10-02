@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Login</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{/css/custom.css}"/>
+</head>
+<body>
+<div class="container">
+    <main>
+        <div class="col-sm-6 offset-sm-3 pt-3">
+            <h1>Видове звания :</h1>
+            <div sec:authorize="hasRole('ADMIN')">
+                <a id="addRankButton"  class="btn btn-info">
+                    + Добави нов вид звание
+                </a>
+                <div id="addRankInputs" style="display: none">
+                    <div class="row">
+                        <input id="newRankInputName" type="text" class="form-control col-sm-6" placeholder="Звание"/>
+                        <input id="newRankInputRankRate" type="number" class="form-control col-sm-4" placeholder="Ранг в йерархията"/>
+                    </div>
+                    <div class="row">
+                        <a id="rankBtnSave" href="#" class="btn btn-outline-success">Save</a>
+                        <a id="rankBtnCancel" href="#" class="btn btn-outline-warning">Cancel</a>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div id="rankList">
+                <div class="row" sec:authorize="hasRole('ADMIN')">
+                    <h5 style="color: #b1a908">За да редактираш запис - променяш текста и натискаш ENTER</h5>
+                </div>
+                <div class="row" sec:authorize="hasRole('ADMIN')">
+                    <h5 style="color: #b1a908">За да изтриеш запис - слагаш маркера в едно от полетата му и натискаш ESC</h5>
+                </div>
+                <div class="row">
+                    <h5 style="color: #b1a908">Ранга е число, колкото по-голямо - толкова и званието е по-високо в йерархията</h5>
+                </div>
+                <div class="row">
+                    <label class="form-control col-sm-6 rank-label">Звание :</label>
+                    <label class="form-control col-sm-4 rank-label">Ранг в йерархията :</label>
+                </div>
+                <div class="row rank-container" th:each="rank : ${ranks}" th:object="${rank}" th:attr="rank_id=${rank.id}" sec:authorize="!hasRole('ADMIN')">
+                    <input type="text" class="updateNameClass form-control col-sm-6" readonly="true" th:value="*{name}"/>
+                    <input type="number" class="updateRankRateClass form-control col-sm-4" readonly="true" th:value="*{rankRate}"/>
+                </div>
+                <div class="row rank-container" th:each="rank : ${ranks}" th:object="${rank}" th:attr="rank_id=${rank.id}" sec:authorize="hasRole('ADMIN')">
+                    <input type="text" class="updateNameClass form-control col-sm-6" th:value="*{name}" th:attr="oldData=*{name}"/>
+                    <input type="number" class="updateRankRateClass form-control col-sm-4" th:value="*{rankRate}" th:attr="oldData=*{rankRate}"/>
+                </div>
+            </div>
+        </div>
+
+        <script th:src="@{/js/rank/rank.js}"></script>
+    </main>
+
+</div>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

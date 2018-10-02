@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Login</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{/css/custom.css}"/>
+</head>
+<body>
+<div class="container">
+    <main>
+        <div class="col-sm-12 pt-3">
+            <h1>Видове работни смени :</h1>
+            <div sec:authorize="hasRole('ADMIN')">
+                <a id="addShiftTypeButton"  class="btn btn-info pickable">
+                    + Добави нов вид работна смяна
+                </a>
+                <div id="addShiftTypeInputs" style="display: none">
+                    <div class="row">
+                        <label class="form-control col-sm-3 shift-type-label">Пълно описание</label>
+                        <label class="form-control col-sm-1 shift-type-label">Кр. изп.</label>
+                        <label class="form-control col-sm-1 shift-type-label">Начало</label>
+                        <label class="form-control col-sm-1 shift-type-label">Край</label>
+                        <label class="form-control col-sm-1 shift-type-label">Второ начало</label>
+                        <label class="form-control col-sm-1 shift-type-label">Втори край</label>
+                        <label class="form-control col-sm-1 shift-type-label">Продълж.</label>
+                        <label class="form-control col-sm-1 shift-type-label">Почивка</label>
+                        <label class="form-control col-sm-1 shift-type-label">Ежедневна</label>
+                        <label class="form-control col-sm-1 shift-type-label">Следв. ден</label>
+                    </div>
+                    <div class="row">
+                        <input id="newShiftTypeInputFullName" type="text" class="form-control col-sm-3" placeholder="Пълно описание"/>
+                        <input id="newShiftTypeInputShortName" type="text" class="form-control col-sm-1" placeholder="Кратко изписване"/>
+                        <input id="newShiftTypeInputStartTime" type="text" class="timepicker-input form-control col-sm-1 center-text" placeholder="hh:mm"/>
+                        <input id="newShiftTypeInputEndTime" type="text" class="timepicker-input form-control col-sm-1 center-text" placeholder="hh:mm"/>
+                        <input id="newShiftTypeInputSecondStartTime" type="text" class="timepicker-input form-control col-sm-1 center-text" placeholder="hh:mm"/>
+                        <input id="newShiftTypeInputSecondEndTime" type="text" class="timepicker-input form-control col-sm-1 center-text" placeholder="hh:mm"/>
+                        <input id="newShiftTypeInputShiftDuration" type="text" class="timepicker-input form-control col-sm-1" placeholder="hh:mm"/>
+                        <input id="newShiftTypeInputBreakDuration" type="text" class="timepicker-input form-control col-sm-1 center-text" placeholder="hh:mm"/>
+                        <div id="newShiftTypeIsRegularShift" class="form-control col-sm-1 center-text boolean-input-owner" data="true"><i class="fa fa-check pickable" aria-hidden="true"></i></div>
+                        <div id="newShiftTypeIsEndOnNextDay" class="form-control col-sm-1 center-text boolean-input-owner" data="false"><i class="fa fa-times pickable" aria-hidden="true"></i></div>
+                    </div>
+                    <div class="row">
+                        <label class="form-control col-sm-3 shift-type-label">група</label>
+                        <label class="form-control col-sm-1 shift-type-label">работни дни</label>
+                        <label class="form-control col-sm-1 shift-type-label">почивни дни</label>
+                        <label class="form-control col-sm-1 shift-type-label">двусменен режим</label>
+                        <label class="form-control col-sm-1 shift-type-label">трисменен режим</label>
+                        <!--
+                        <label class="form-control col-sm-1 shift-type-label">първи работен</label>
+                        <label class="form-control col-sm-1 shift-type-label">първи почивен</label>
+                        -->
+                        <label class="form-control col-sm-1 shift-type-label">последен работен</label>
+                        <label class="form-control col-sm-1 shift-type-label">последен почивен</label>
+                    </div>
+                    <div class="row">
+                        <select class="form-control form-control col-sm-3" id="shiftTypeGroup">
+                            <option selected value="0">не е в група</option>
+                            <option th:each="shiftTypeGroup, iter : ${shiftTypeGroups}" th:value="${shiftTypeGroup.id}" th:text="${shiftTypeGroup.groupName}"></option>
+                        </select>
+                        <div id="canBeOnWorkDay" class="form-control col-sm-1 center-text boolean-input-owner" data="true"><i class="fa fa-check pickable" aria-hidden="true"></i></div>
+                        <div id="canBeOnRestDay" class="form-control col-sm-1 center-text boolean-input-owner" data="true"><i class="fa fa-check pickable" aria-hidden="true"></i></div>
+                        <div id="canBeOnDoubleShiftRegime" class="form-control col-sm-1 center-text boolean-input-owner" data="true"><i class="fa fa-check pickable" aria-hidden="true"></i></div>
+                        <div id="canBeOnTripleShiftRegime" class="form-control col-sm-1 center-text boolean-input-owner" data="true"><i class="fa fa-check pickable" aria-hidden="true"></i></div>
+                        <!--
+                        <div id="canBeOnFirstWorkDayAfterRestDay" class="form-control col-sm-1 center-text boolean-input-owner" data="true"><i class="fa fa-check pickable" aria-hidden="true"></i></div>
+                        <div id="canBeOnFirstRestDayAfterWorkDay" class="form-control col-sm-1 center-text boolean-input-owner" data="true"><i class="fa fa-check pickable" aria-hidden="true"></i></div>
+                        -->
+                        <div id="canBeOnLastWorkDayBeforeRestDay" class="form-control col-sm-1 center-text boolean-input-owner" data="true"><i class="fa fa-check pickable" aria-hidden="true"></i></div>
+                        <div id="canBeOnLastRestDayBeforeWorkDay" class="form-control col-sm-1 center-text boolean-input-owner" data="true"><i class="fa fa-check pickable" aria-hidden="true"></i></div>
+                    </div>
+                    <div class="row">
+                        <a id="shiftTypeBtnSave" class="btn btn-outline-success pickable">Save</a>
+                        <a id="shiftTypeBtnCancel" class="btn btn-outline-warning pickable">Cancel</a>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div id="shiftTypeList">
+                <div class="row" sec:authorize="hasRole('ADMIN')">
+                    <h5 style="color: #b1a908">За да редактираш запис - променяш текста и натискаш ENTER</h5>
+                </div>
+                <div class="row" sec:authorize="hasRole('ADMIN')">
+                    <h5 style="color: #b1a908">За да изтриеш запис - слагаш маркера в едно от полетата му и натискаш ESC</h5>
+                </div>
+                <div class="row" sec:authorize="hasRole('ADMIN')">
+                    <h5 style="color: #b1a908">Ежедневна - дали има начален и краен час</h5>
+                </div>
+                <div th:each="shiftType : ${shiftTypes}" th:object="${shiftType}" th:attr="shiftType_id=${shiftType.id},id=|shiftTypeFullCont_${shiftType.id}|" sec:authorize="hasRole('ADMIN')">
+                    <div class="row">
+                        <label class="form-control col-sm-3 shift-type-label">Пълно описание</label>
+                        <label class="form-control col-sm-1 shift-type-label">Кр. изп.</label>
+                        <label class="form-control col-sm-1 shift-type-label">Начало</label>
+                        <label class="form-control col-sm-1 shift-type-label">Край</label>
+                        <label class="form-control col-sm-1 shift-type-label">Второ начало</label>
+                        <label class="form-control col-sm-1 shift-type-label">Втори край</label>
+                        <label class="form-control col-sm-1 shift-type-label">Продълж.</label>
+                        <label class="form-control col-sm-1 shift-type-label">Почивка</label>
+                        <label class="form-control col-sm-1 shift-type-label">Ежедневна</label>
+                        <label class="form-control col-sm-1 shift-type-label">Следв. ден</label>
+                    </div>
+                    <div class="row shiftType-container"  th:attr="shiftType_id=${shiftType.id}">
+                        <input type="text" class="updateFullNameClass form-control col-sm-3" th:value="*{fullName}" th:attr="oldData=*{fullName}"/>
+                        <input type="text" class="updateShortNameClass form-control col-sm-1" th:value="*{shortName}" th:attr="oldData=*{shortName}"/>
+                        <input type="text" class="updateStartTime timepicker-input form-control col-sm-1 center-text" th:value="*{startTime}" th:attr="oldData=*{startTime}" th:id="|startTime_${shiftType.id}|"/>
+                        <input type="text" class="updateEndTime timepicker-input form-control col-sm-1 center-text" th:value="*{endTime}" th:attr="oldData=*{endTime}" th:id="|endTime_${shiftType.id}|"/>
+                        <input type="text" class="updateSecondStartTime timepicker-input form-control col-sm-1 center-text" th:value="*{secondStartTime}" th:attr="oldData=*{secondStartTime}" th:id="|secondStartTime_${shiftType.id}|"/>
+                        <input type="text" class="updateSecondEndTime timepicker-input form-control col-sm-1 center-text" th:value="*{secondEndTime}" th:attr="oldData=*{secondEndTime}" th:id="|secondEndTime_${shiftType.id}|"/>
+                        <input type="text" class="updateShiftDuration timepicker-input form-control col-sm-1 center-text" th:value="*{shiftDuration}" th:attr="oldData=*{shiftDuration}" th:id="|shiftDuration_${shiftType.id}|"/>
+                        <input type="text" class="updateBreakDuration timepicker-input form-control col-sm-1 center-text" th:value="*{breakDuration}" th:attr="oldData=*{breakDuration}" th:id="|breakDuration_${shiftType.id}|"/>
+                        <div class="updateIsRegularShift form-control col-sm-1 center-text boolean-input-owner" th:attr="data=*{isRegularShift}"><i class="fa pickable" th:classappend="*{isRegularShift}? 'fa-check' : 'fa-times'" aria-hidden="true"></i></div>
+                        <div class="updateIsEndOnNextDay form-control col-sm-1 center-text boolean-input-owner" th:attr="data=*{isEndOnNextDay}"><i class="fa pickable" th:classappend="*{isEndOnNextDay}? 'fa-check' : 'fa-times'" aria-hidden="true"></i></div>
+                    </div>
+                    <div class="row">
+                        <label class="form-control col-sm-3 shift-type-label">група</label>
+                        <label class="form-control col-sm-1 shift-type-label">работен ден(не краен)</label>
+                        <label class="form-control col-sm-1 shift-type-label">почивен ден(не краен)</label>
+                        <label class="form-control col-sm-1 shift-type-label">двусменен режим</label>
+                        <label class="form-control col-sm-1 shift-type-label">трисменен режим</label>
+                        <label class="form-control col-sm-1 shift-type-label">последен работен</label>
+                        <label class="form-control col-sm-1 shift-type-label">последен почивен</label>
+                    </div>
+                    <div class="row shiftType-container" th:attr="shiftType_id=${shiftType.id}">
+                        <select class="form-control form-control col-sm-3" th:attr="id=|shiftTypeGroup_${shiftType.id}|">
+                            <option selected value="0">не е в група</option>
+                            <option th:selected="${shiftTypeGroup.id} == ${shiftType.shiftTypeGroupId}" th:each="shiftTypeGroup, iter : ${shiftTypeGroups}" th:value="${shiftTypeGroup.id}" th:text="${shiftTypeGroup.groupName}"></option>
+                        </select>
+                        <div class="form-control col-sm-1 center-text boolean-input-owner" th:attr="data=*{canBeOnWorkDay}, id=|updateCanBeOnWorkDay_${shiftType.id}|"><i class="fa pickable" th:classappend="*{canBeOnWorkDay}? 'fa-check' : 'fa-times'" aria-hidden="true"></i></div>
+                        <div class="form-control col-sm-1 center-text boolean-input-owner" th:attr="data=*{canBeOnRestDay}, id=|updateCanBeOnRestDay_${shiftType.id}|"><i class="fa pickable" th:classappend="*{canBeOnRestDay}? 'fa-check' : 'fa-times'" aria-hidden="true"></i></div>
+                        <div class="form-control col-sm-1 center-text boolean-input-owner" th:attr="data=*{canBeOnDoubleShiftRegime}, id=|updateCanBeOnDoubleShiftRegime_${shiftType.id}|"><i class="fa pickable" th:classappend="*{canBeOnDoubleShiftRegime}? 'fa-check' : 'fa-times'" aria-hidden="true"></i></div>
+                        <div class="form-control col-sm-1 center-text boolean-input-owner" th:attr="data=*{canBeOnTripleShiftRegime}, id=|updateCanBeOnTripleShiftRegime_${shiftType.id}|"><i class="fa pickable" th:classappend="*{canBeOnTripleShiftRegime}? 'fa-check' : 'fa-times'" aria-hidden="true"></i></div>
+                        <!--
+                        <div class="form-control col-sm-1 center-text boolean-input-owner" th:attr="data=*{canBeOnFirstWorkDayAfterRestDay}, id=|updateCanBeOnFirstWorkDayAfterRestDay_${shiftType.id}|"><i class="fa pickable" th:classappend="*{canBeOnFirstWorkDayAfterRestDay}? 'fa-check' : 'fa-times'" aria-hidden="true"></i></div>
+                        <div class="form-control col-sm-1 center-text boolean-input-owner" th:attr="data=*{canBeOnFirstRestDayAfterWorkDay}, id=|updateCanBeOnFirstRestDayAfterWorkDay_${shiftType.id}|"><i class="fa pickable" th:classappend="*{canBeOnFirstRestDayAfterWorkDay}? 'fa-check' : 'fa-times'" aria-hidden="true"></i></div>
+                        -->
+                        <div class="form-control col-sm-1 center-text boolean-input-owner" th:attr="data=*{canBeOnLastWorkDayBeforeRestDay}, id=|updateCanBeOnLastWorkDayBeforeRestDay_${shiftType.id}|"><i class="fa pickable" th:classappend="*{canBeOnLastWorkDayBeforeRestDay}? 'fa-check' : 'fa-times'" aria-hidden="true"></i></div>
+                        <div class="form-control col-sm-1 center-text boolean-input-owner" th:attr="data=*{canBeOnLastRestDayBeforeWorkDay}, id=|updateCanBeOnLastRestDayBeforeWorkDay_${shiftType.id}|"><i class="fa pickable" th:classappend="*{canBeOnLastRestDayBeforeWorkDay}? 'fa-check' : 'fa-times'" aria-hidden="true"></i></div>
+                    </div>
+                    <hr>
+                </div>
+
+                <div th:each="shiftType : ${shiftTypes}" th:object="${shiftType}" sec:authorize="!hasRole('ADMIN')">
+                    <div class="row">
+                        <label class="form-control col-sm-3 shift-type-label">Пълно описание</label>
+                        <label class="form-control col-sm-1 shift-type-label">Кр. изп.</label>
+                        <label class="form-control col-sm-1 shift-type-label">Начало</label>
+                        <label class="form-control col-sm-1 shift-type-label">Край</label>
+                        <label class="form-control col-sm-1 shift-type-label">Второ начало</label>
+                        <label class="form-control col-sm-1 shift-type-label">Втори край</label>
+                        <label class="form-control col-sm-1 shift-type-label">Продълж.</label>
+                        <label class="form-control col-sm-1 shift-type-label">Почивка</label>
+                        <label class="form-control col-sm-1 shift-type-label">Ежедневна</label>
+                        <label class="form-control col-sm-1 shift-type-label">Следв. ден</label>
+                    </div>
+                    <div class="row"  th:attr="shiftType_id=${shiftType.id}">
+                        <input type="text" class="updateFullNameClass form-control col-sm-3" readonly="true" th:value="*{fullName}"/>
+                        <input type="text" class="updateShortNameClass form-control col-sm-1" readonly="true" th:value="*{shortName}"/>
+                        <input type="text" class="updateStartTime form-control col-sm-1 center-text" readonly="true" th:value="*{startTime}"/>
+                        <input type="text" class="updateEndTime form-control col-sm-1 center-text" readonly="true" th:value="*{endTime}"/>
+                        <input type="text" class="updateSecondStartTime form-control col-sm-1 center-text" readonly="true" th:value="*{secondStartTime}"/>
+                        <input type="text" class="updateSecondEndTime form-control col-sm-1 center-text" readonly="true" th:value="*{secondEndTime}"/>
+                        <input type="text" class="updateShiftDuration form-control col-sm-1 center-text" readonly="true" th:value="*{shiftDuration}"/>
+                        <input type="text" class="updateBreakDuration form-control col-sm-1 center-text" readonly="true" th:value="*{breakDuration}"/>
+                        <div class="updateIsRegularShift form-control col-sm-1 center-text" readonly="true" th:classappend="*{!isRegularShift}? 'hideText'"><i class="fa fa-check" aria-hidden="true"></i></div>
+                        <div class="updateIsRegularShift form-control col-sm-1 center-text" readonly="true" th:classappend="*{isRegularShift}? 'hideText'"><i class="fa fa-times" aria-hidden="true"></i></div>
+                        <div class="updateIsEndOnNextDay form-control col-sm-1 center-text" readonly="true" th:classappend="*{!isEndOnNextDay}? 'hideText'"><i class="fa fa-check" aria-hidden="true"></i></div>
+                        <div class="updateIsEndOnNextDay form-control col-sm-1 center-text" readonly="true" th:classappend="*{isEndOnNextDay}? 'hideText'"><i class="fa fa-times" aria-hidden="true"></i></div>
+                    </div>
+                    <div class="row">
+                        <label class="form-control col-sm-3 shift-type-label" style="visibility: hidden"></label>
+                        <label class="form-control col-sm-1 shift-type-label">работни дни</label>
+                        <label class="form-control col-sm-1 shift-type-label">почивни дни</label>
+                        <label class="form-control col-sm-1 shift-type-label">двусменен режим</label>
+                        <label class="form-control col-sm-1 shift-type-label">трисменен режим</label>
+                        <!--
+                        <label class="form-control col-sm-1 shift-type-label">първи работен</label>
+                        <label class="form-control col-sm-1 shift-type-label">първи почивен</label>
+                        -->
+                        <label class="form-control col-sm-1 shift-type-label">последен работен</label>
+                        <label class="form-control col-sm-1 shift-type-label">последен почивен</label>
+                    </div>
+                    <div class="row" th:attr="shiftType_id=${shiftType.id}">
+                        <input style="visibility: hidden" type="text" class="form-control col-sm-3" disabled/>
+                        <div class="form-control col-sm-1 center-text"><i class="fa" th:classappend="*{canBeOnWorkDay}? 'fa-check' : 'fa-times'" aria-hidden="true"></i></div>
+                        <div class="form-control col-sm-1 center-text"><i class="fa" th:classappend="*{canBeOnRestDay}? 'fa-check' : 'fa-times'" aria-hidden="true"></i></div>
+                        <div class="form-control col-sm-1 center-text"><i class="fa" th:classappend="*{canBeOnDoubleShiftRegime}? 'fa-check' : 'fa-times'" aria-hidden="true"></i></div>
+                        <div class="form-control col-sm-1 center-text"><i class="fa" th:classappend="*{canBeOnTripleShiftRegime}? 'fa-check' : 'fa-times'" aria-hidden="true"></i></div>
+                        <!--
+                        <div class="form-control col-sm-1 center-text"><i class="fa" th:classappend="*{canBeOnFirstWorkDayAfterRestDay}? 'fa-check' : 'fa-times'" aria-hidden="true"></i></div>
+                        <div class="form-control col-sm-1 center-text"><i class="fa" th:classappend="*{canBeOnFirstRestDayAfterWorkDay}? 'fa-check' : 'fa-times'" aria-hidden="true"></i></div>
+                        -->
+                        <div class="form-control col-sm-1 center-text"><i class="fa" th:classappend="*{canBeOnLastWorkDayBeforeRestDay}? 'fa-check' : 'fa-times'" aria-hidden="true"></i></div>
+                        <div class="form-control col-sm-1 center-text"><i class="fa" th:classappend="*{canBeOnLastRestDayBeforeWorkDay}? 'fa-check' : 'fa-times'" aria-hidden="true"></i></div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+
+        <div th:replace="fragments/elements::timepicker"></div>
+        <script th:src="@{/js/shiftTypes/shiftTypes.js}"></script>
+        <script th:src="@{/js/TimeCalculator.js}"></script>
+    </main>
+
+</div>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

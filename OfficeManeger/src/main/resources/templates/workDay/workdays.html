@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Login</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{/css/custom.css}"/>
+</head>
+<body>
+<div class="container">
+    <main>
+        <div class="row">
+            <div class="card office-table workdays-table">
+                <table class="table table-striped table-hover">
+                    <h3>Допълнителни работни дни :</h3>
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th sec:authorize="hasRole('ADMIN')"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="workdays-table-body">
+                        <tr th:each="workDay : ${workDays}" th:id="|tr_${workDay.id}|">
+                            <td th:text="|${#temporals.format(workDay.date, 'dd.MM.yyyy')} г.|"></td>
+                            <td sec:authorize="hasRole('ADMIN')">
+                                <a th:id="|workDay_${workDay.id}|" class="btn btn-outline-danger btn-sm delete-workday-button">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div  sec:authorize="hasRole('ADMIN')">
+                    <input type="text" placeholder="e.g. dd.MM.yyyy" id="newWorkDayInput" />
+                    <a id="btnAddWorkDay" class="btn btn-success disabled">+ Add</a>
+                </div>
+            </div>
+
+            <div class="card office-table workdays-table">
+                <h3>Празници :</h3>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th sec:authorize="hasRole('ADMIN')"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="holidays-table-body">
+                        <tr th:each="holiday : ${holidays}" th:id="|tr_${holiday.id}|">
+                            <td th:text="|${#temporals.format(holiday.date, 'dd.MM.yyyy')} г.|"></td>
+                            <td sec:authorize="hasRole('ADMIN')">
+                                <a th:id="|workDay_${holiday.id}|" class="btn btn-outline-danger btn-sm delete-workday-button">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <input type="text" placeholder="e.g. dd.MM.yyyy" id="newHolidayInput" />
+                    <a id="btnAddHoliday" class="btn btn-success disabled">+ Add</a>
+                </div>
+            </div>
+
+        </div>
+
+        <script th:src="@{/js/workdays/workdays.js}"></script>
+    </main>
+
+</div>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

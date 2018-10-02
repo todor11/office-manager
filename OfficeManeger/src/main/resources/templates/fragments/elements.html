@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/custom.css"
+          th:href="@{css/custom.css}"/>
+    <link rel="stylesheet" href="../../static/bootstrap/font-awesome/css/font-awesome.min.css"
+          th:href="@{bootstrap/font-awesome/css/font-awesome.min.css}">
+</head>
+
+<body>
+<div th:fragment="timepicker">
+
+    <!--  Timepicker -->
+    <div class="cd-popup" owner-id="empty">
+        <div class="cd-popup-container timepicker-container">
+            <table class="timepicker-table">
+                <tbody>
+                <tr>
+                    <td class="hour-container">
+                        <div class="timepicker-label">Часове</div>
+                        <table class="hour-table">
+                            <tbody>
+                            <tr>
+                                <td class="timepicker-cell hour" data-hour="0">
+                                    <a class="state-default">00</a>
+                                </td>
+                                <td class="timepicker-cell hour" data-hour="1">
+                                    <a class="state-default">01</a>
+                                </td>
+                                <td class="timepicker-cell hour" data-hour="2">
+                                    <a class="state-default">02</a>
+                                </td>
+                                <td class="timepicker-cell hour" data-hour="3">
+                                    <a class="state-default">03</a>
+                                </td>
+                                <td class="timepicker-cell hour" data-hour="4">
+                                    <a class="state-default">04</a>
+                                </td>
+                                <td class="timepicker-cell hour" data-hour="5">
+                                    <a class="state-default">05</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="timepicker-cell hour" data-hour="6">
+                                    <a class="state-default">06</a>
+                                </td>
+                                <td class="timepicker-cell hour" data-hour="7">
+                                    <a class="state-default">07</a>
+                                </td>
+                                <td class="timepicker-cell hour" data-hour="8">
+                                    <a class="state-default">08</a>
+                                </td>
+                                <td class="timepicker-cell hour" data-hour="9">
+                                    <a class="state-default">09</a>
+                                </td>
+                                <td class="timepicker-cell hour" data-hour="10">
+                                    <a class="state-default">10</a>
+                                </td>
+                                <td class="timepicker-cell hour" data-hour="11">
+                                    <a class="state-default">11</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="timepicker-cell hour" data-hour="12">
+                                    <a class="state-default">12</a>
+                                </td>
+                                <td class="timepicker-cell hour" data-hour="13">
+                                    <a class="state-default">13</a>
+                                </td>
+                                <td class="timepicker-cell hour" data-hour="14">
+                                    <a class="state-default">14</a>
+                                </td>
+                                <td class="timepicker-cell hour" data-hour="15">
+                                    <a class="state-default">15</a>
+                                </td>
+                                <td class="timepicker-cell hour" data-hour="16">
+                                    <a class="state-default">16</a>
+                                </td>
+                                <td class="timepicker-cell hour" data-hour="17">
+                                    <a class="state-default">17</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="timepicker-cell hour" data-hour="18">
+                                    <a class="state-default">18</a>
+                                </td>
+                                <td class="timepicker-cell hour" data-hour="19">
+                                    <a class="state-default">19</a>
+                                </td>
+                                <td class="timepicker-cell hour" data-hour="20">
+                                    <a class="state-default">20</a>
+                                </td>
+                                <td class="timepicker-cell hour" data-hour="21">
+                                    <a class="state-default">21</a>
+                                </td>
+                                <td class="timepicker-cell hour" data-hour="22">
+                                    <a class="state-default">22</a>
+                                </td>
+                                <td class="timepicker-cell hour" data-hour="23">
+                                    <a class="state-default">23</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td class="minute-container">
+                        <div class="timepicker-label">Минути - десетици</div>
+                        <table class="minute-table">
+                            <tbody>
+                            <tr>
+                                <td class="timepicker-cell minute minute-first" data-minute="0*">
+                                    <a class="state-default">0*</a>
+                                </td>
+                                <td class="timepicker-cell minute minute-first" data-minute="1*">
+                                    <a class="state-default">1*</a>
+                                </td>
+                                <td class="timepicker-cell minute minute-first" data-minute="2*">
+                                    <a class="state-default">2*</a>
+                                </td>
+                                <td class="timepicker-cell minute minute-first" data-minute="3*">
+                                    <a class="state-default">3*</a>
+                                </td>
+                                <td class="timepicker-cell minute minute-first" data-minute="4*">
+                                    <a class="state-default">4*</a>
+                                </td>
+                                <td class="timepicker-cell minute minute-first" data-minute="5*">
+                                    <a class="state-default">5*</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="timepicker-label">Минути - единици</div>
+                        <table class="minute-table">
+                            <tbody>
+                            <tr>
+                                <td class="timepicker-cell minute minute-second" data-minute="*0">
+                                    <a class="state-default">*0</a>
+                                </td>
+                                <td class="timepicker-cell minute minute-second" data-minute="*1">
+                                    <a class="state-default">*1</a>
+                                </td>
+                                <td class="timepicker-cell minute minute-second" data-minute="*2">
+                                    <a class="state-default">*2</a>
+                                </td>
+                                <td class="timepicker-cell minute minute-second" data-minute="*3">
+                                    <a class="state-default">*3</a>
+                                </td>
+                                <td class="timepicker-cell minute minute-second" data-minute="*4">
+                                    <a class="state-default">*4</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="timepicker-cell minute minute-second" data-minute="*5">
+                                    <a class="state-default">*5</a>
+                                </td>
+                                <td class="timepicker-cell minute minute-second" data-minute="*6">
+                                    <a class="state-default">*6</a>
+                                </td>
+                                <td class="timepicker-cell minute minute-second" data-minute="*7">
+                                    <a class="state-default">*7</a>
+                                </td>
+                                <td class="timepicker-cell minute minute-second" data-minute="*8">
+                                    <a class="state-default">*8</a>
+                                </td>
+                                <td class="timepicker-cell minute minute-second" data-minute="*9">
+                                    <a class="state-default">*9</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
